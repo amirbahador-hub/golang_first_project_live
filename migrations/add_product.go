@@ -3,24 +3,18 @@ package migrations
 import (
 	"fmt"
 	"digikala/logger"
-	"digikala/mydb"
-	_ "github.com/lib/pq"
+	"digikala/models"
+	"digikala/initializers"
 )
 
 
-func CreateTables(){
-
-	globalDatabase := mydb.ConnectDatabase()
+func RunMigrations() {
 	myslog := logger.GetLogger()
-
-	myslog.Info("create tables")
-	rows, err := globalDatabase.Query(`create table if not exists Product (
-  id INT PRIMARY KEY,
-  title TEXT,
-  price INT
-)`)
+	config, err := initializers.LoadConfig(".")
 	if err != nil {
-		myslog.Error(err.Error())
+		myslog.Error("🚀 Could not load environment variables", err)
 	}
-	fmt.Println(rows)
+	initializers.ConnectDB(&config)
+	initializers.DB.AutoMigrate(&models.Product{}, &models.Brand{}, &models.Category{})
+	fmt.Println("👍 Migration complete")
 }
