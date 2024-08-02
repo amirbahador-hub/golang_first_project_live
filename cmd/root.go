@@ -1,27 +1,13 @@
-package main 
+package main
 
 import (
-	"digikala/logger"
 	"digikala/apis"
 	"digikala/migrations"
-	"net/http"
+	"fmt"
 	"github.com/spf13/cobra"
 )
 
 
-func run(){
-
-	myslog := logger.GetLogger()
-	http.HandleFunc("/", apis.GetRoot)
-	http.HandleFunc("/create_product", apis.CreateProduct)
-
-
-	myslog.Info("Start Listening to 8000")
-	serverErr := http.ListenAndServe(":8000", nil)
-	if serverErr != nil {
-		myslog.Error("Something is Wrong")
-	}
-}
 
 
   func main() {
@@ -42,7 +28,11 @@ func run(){
 	  Long: `echo is for echoing anything back.
   Echo works a lot like print, except it has a child command.`,
 	  Run: func(cmd *cobra.Command, args []string) {
-		run()
+		migrations.Setup()
+		router := apis.GetRouter()
+		if err := router.Start(":8080"); err != nil {
+			fmt.Println("Nooooooooooo")
+		}
 	  },
 	}
   
