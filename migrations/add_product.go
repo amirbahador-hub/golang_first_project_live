@@ -3,7 +3,8 @@ package migrations
 import (
 	"fmt"
 	"digikala/logger"
-	"digikala/models"
+	"digikala/shop"
+	"digikala/auth"
 	"digikala/initializers"
 )
 
@@ -18,6 +19,6 @@ func Setup(){
 
 func RunMigrations() {
 	Setup()
-	initializers.DB.AutoMigrate(&models.Product{}, &models.Brand{}, &models.Category{})
+	initializers.DB.AutoMigrate(&shop.Product{}, &shop.Brand{}, &shop.Category{}, &auth.User{})
 	fmt.Println("👍 Migration complete")
 }

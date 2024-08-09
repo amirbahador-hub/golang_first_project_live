@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+const SECRET_KEY="nhdx(=+kek#x+mzyd@qnk!ghu5vc+r($w4*zl^ry6sw1v#2yat"
 type Config struct {
 	DBHost         string `mapstructure:"POSTGRES_HOST"`
 	DBUserName     string `mapstructure:"POSTGRES_USER"`

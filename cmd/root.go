@@ -30,7 +30,8 @@ import (
 	  Run: func(cmd *cobra.Command, args []string) {
 		migrations.Setup()
 		router := apis.GetRouter()
-		if err := router.Start(":8080"); err != nil {
+		if err := router.Start(":8083"); err != nil {
+			fmt.Println(err)
 			fmt.Println("Nooooooooooo")
 		}
 	  },
