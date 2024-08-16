@@ -3,8 +3,8 @@ package main
 import (
         "context"
         "log"
-        "os"
-        "strings"
+        // "os"
+        // "strings"
         "time"
 
         amqp "github.com/rabbitmq/amqp091-go"
@@ -102,14 +102,14 @@ func main() {
         log.Printf(" [x] Sent %s", body)
 }
 
-func bodyFrom(args []string) string {
-        var s string
-        if (len(args) < 2) || os.Args[1] == "" {
-                s = "hello"
-        } else {
-                s = strings.Join(args[1:], " ")
-        }
-        return s
-}
+// func bodyFrom(args []string) string {
+//         var s string
+//         if (len(args) < 2) || os.Args[1] == "" {
+//                 s = "hello"
+//         } else {
+//                 s = strings.Join(args[1:], " ")
+//         }
+//         return s
+// }
 
 

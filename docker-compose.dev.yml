@@ -6,8 +6,36 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/apps/postgres2:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=S3cret
-      - POSTGRES_USER=citizix_user
-      - POSTGRES_DB=citizix_db
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_USER=user
+      - POSTGRES_DB=test_db
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    # networks:
+    #     - rabbitmq_go_net
+
+  mongodb:
+    image: mongodb/mongodb-community-server:6.0-ubi8
+    ports:
+        - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
+
+# networks:
+#   rabbitmq_go_net:
+#     driver: bridge
